@@ -15,14 +15,24 @@ var router = express.Router();
 // test route to make sure everything is working (accessed at GET http://localhost:3000/api)
 router.post('/', function(req, res) {
   console.log(req.headers);
-  var body = '';
-  req.on('data',function(data){
-    body += data;
-  })
-  req.on('end', function(){
-    console.log(body);
-    res.json({ message: 'You just took a picture!' });
-  })
+  switch(req.headers.type) {
+    case 'RTC':
+        if(Object.keys(req.body).length > 0
+            && req.body.card && req.body.card.length > 0
+            && req.body.user && req.body.user.length > 0){
+          console.log('in req.body');
+          console.log('BODY: ' + JSON.stringify(req.body));
+          res.json({ message: 'So... You took a picture? ...and it was: ' + JSON.stringify(req.body) });
+        } else {
+          res.json({ message: 'Need to send these options: card, user, openTab, and toast'});
+        }
+        break;
+    case 'Other':
+        //do other stuff
+        break;
+    default:
+        res.json({message:'Invalid type specified in header'});
+  }
 });
 
 app.use('/api', router);

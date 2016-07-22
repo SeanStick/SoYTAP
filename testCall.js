@@ -1,12 +1,14 @@
 var http = require('http');
 
+//host: 'localhost',
+//port: 3000,
 var options = {
-  host: 'localhost',
-  port: 3000,
+  host: 'soytap.azurewebsites.net',
   path: '/api',
   method: 'POST',
   headers: {
-    "type":"RTC"
+    'Content-Type': 'application/json',
+    'type':'RTC'
   }
 };
 
@@ -18,5 +20,5 @@ var request = http.request(options, function(res) {
     console.log('BODY: ' + chunk);
   });
 })
-request.write('this');
+request.write(JSON.stringify({user:'Jerome The Russ', card: '123456'}));
 request.end();
