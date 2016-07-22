@@ -10,6 +10,10 @@ var events = [];
 
 io.on('connection', function(socket){
   socket.emit('refresh', events);
+  socket.on('clear',function(){
+    events = [];
+    socket.emit('refresh', events);
+  });
   console.log('a user connected');
 });
 
