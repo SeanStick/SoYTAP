@@ -6,11 +6,10 @@ var http = require('http');
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);  //pass a http.Server instance
 
-var items = [];
-var addItem;
+var events = [];
 
 io.on('connection', function(socket){
-  socket.emit('refresh', "refresh this stuff!");
+  socket.emit('refresh', events);
   console.log('a user connected');
 });
 
@@ -33,8 +32,10 @@ router.post('/', function(req, res) {
             && req.body.card && req.body.card.length > 0
             && req.body.user && req.body.user.length > 0){
           console.log('in req.body');
+          req.body.type = 'RTC';
           console.log('BODY: ' + JSON.stringify(req.body));
           io.emit('new rtc item',req.body);
+          events[events.length] = req.body;
           res.json({ message: 'So... You took a picture? ...and it was: ' + JSON.stringify(req.body) });
         } else {
           res.json({ message: 'Need to send these options: card, user, openTab, and toast'});
