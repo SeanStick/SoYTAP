@@ -8,7 +8,7 @@ var options = {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
-    'type':'RTC'
+    'type':'Other'
   }
 };
 
@@ -20,5 +20,5 @@ var request = http.request(options, function(res) {
     console.log('BODY: ' + chunk);
   });
 })
-request.write(JSON.stringify({user:'Jerome The Russ', card: '123456', toast: true}));
+request.write(JSON.stringify({toast: true, message: 'Hello World!'}));
 request.end();

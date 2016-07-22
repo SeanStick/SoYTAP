@@ -42,7 +42,15 @@ router.post('/', function(req, res) {
         }
         break;
     case 'Other':
-        //do other stuff
+        if(Object.keys(req.body).length > 0
+            && req.body.message && req.body.message.length > 0){
+          req.body.type = 'Other';
+          events[events.length] = req.body;
+          io.emit('new other item',req.body);
+          res.json({ message: 'So... You sent a message! ...and it was: ' + JSON.stringify(req.body)});
+        } else {
+          res.json({ message: 'Need to send a message for type Other'});
+        }
         break;
     default:
         res.json({message:'Invalid type specified in header'});
