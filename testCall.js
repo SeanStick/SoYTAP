@@ -20,5 +20,5 @@ var request = http.request(options, function(res) {
     console.log('BODY: ' + chunk);
   });
 })
-request.write(JSON.stringify({user:'Jerome The Russ', card: '123456'}));
+request.write(JSON.stringify({user:'Jerome The Russ', card: '123456', toast: true}));
 request.end();
